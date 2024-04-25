@@ -1,26 +1,35 @@
-import React from "react";
+import React from 'react'
+import { useState } from 'react'
+import '../../styles/App.css'
+import { TodoHeader } from './TodoHeader.jsx'
+import { TodoForm } from './TodoForm.jsx'
+import { TodoList } from './TodoList.jsx'
+import { TodoSearch } from './TodoSearch.jsx'
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+
+
 
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
-};
+	const [messageList, setMessageList] = useState(["Learn React","Buy Hans Thermomix","Get a job"]);
+    
+    const addTodo = (message) => {
+      setMessageList([...messageList, message]);
+    };
+  
+    const deleteTodo = (messageToDelete) => {
+      const updateMessageList = messageList.filter(message => message !== messageToDelete)
+      setMessageList(updateMessageList)
+    };
+  
+    return (
+      <div className="app">
+        <TodoSearch todos={messageList} />
+        <TodoHeader />
+        <TodoForm addTodo={addTodo} /> <br /> 
+        <TodoList messageList={messageList} deleteTodo={deleteTodo} />
+      </div>
+    );
+  };
 
 export default Home;
